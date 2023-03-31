@@ -16,7 +16,7 @@ class _HelpScreenPageState extends State<HelpScreenPage> {
 
   _goToHome() async{
     await Future.delayed(const Duration(seconds:5));
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomePage()));
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
   @override
