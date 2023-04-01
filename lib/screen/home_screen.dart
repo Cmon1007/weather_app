@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )
               : const Center(
-                  child: Text('Weather Details',
+                  child: Text('Loading...',
                   style: TextStyle(fontSize: 24.0),),
                 )
             ]

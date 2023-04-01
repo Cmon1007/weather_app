@@ -1,16 +1,32 @@
-# weatherapp
+Weather App
+-This is a Flutter app that displays weather of given city by using the Weather API from (https://www.weatherapi.com/) and at first the weather of current loation will be displayed with latitude and longititude of user location.
 
-A new Flutter project.
+Features:
+-User can enter city name to get weather details.
+-User can view weather details for their current location when app is launched.
+-Displays city name, current temperature in °C, condition and image respresenting current weather condition.
+-User can view a help screen which is a splash screen.
 
-## Getting Started
+Tecgnologies:
+-Dart
+-Flutter
+-Weather API
+-HTTP Package
+-Location Package
 
-This project is a starting point for a Flutter application.
+Setup:
+To use this app, you will need to have Flutter installed on your machine.
+1. Clone this repository:
+https://github.com/Cmon1007/weather_app.git
 
-A few resources to get you started if this is your first Flutter project:
+2. Install dependencies:
+flutter pub get
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. Run the app:
+flutter run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Usage:
+-Enter a city name in the text field and click on the "SAVE"button to view weather details for the entered city.
+-Click on the "UPDATE"button to update weather details for the entered city.
+-Click on the help icon to view the help screen.
+-The app will display the weather details for current location by default when app is launched at first.
