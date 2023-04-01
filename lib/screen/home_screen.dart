@@ -12,21 +12,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _cityname="";
+  bool _buttonLoaded=false;
   Map<String, dynamic> _weatherData={}; 
 
   //Calling Api with http request
    void _getWeatherData() async
   {
+    if(_cityname.isEmpty)
+    {
+      ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(content: Text("Error: Please enter a City Name"),
+        duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
     Response response=await get(Uri.parse(
       "http://api.weatherapi.com/v1/current.json?key=bcf129e6d8a045f881d43921232703&q=$_cityname&aqi=no"));
   if(response.statusCode==200)
   {
     setState(() {
       _weatherData=jsonDecode(response.body);
+      _buttonLoaded=true;
     });
   }
-  else
+ else
   {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Couldn't find the City name"),
+      duration: Duration(seconds: 2),
+      )
+    );
   }
   }
   @override
@@ -63,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               _getWeatherData();
             });
            } ,
-         child: const Text("Search"),
+         child: Text(_buttonLoaded?"UPDATE":"SAVE"),
          ),
          const SizedBox(height: 16.0),
         _weatherData.isNotEmpty
