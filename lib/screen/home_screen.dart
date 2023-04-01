@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _cityname="";
   Map<String, dynamic> _weatherData={}; 
   @override
   void initState() {
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
    void _getWeatherData() async
   {
     Response response=await get(Uri.parse(
-      "http://api.weatherapi.com/v1/current.json?key=bcf129e6d8a045f881d43921232703&q=Kathmandu&aqi=no"));
+      "http://api.weatherapi.com/v1/current.json?key=bcf129e6d8a045f881d43921232703&q=$_cityname&aqi=no"));
   if(response.statusCode==200)
   {
     setState(() {
@@ -48,16 +49,24 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
           children: [
-           const TextField(
-                   decoration:  InputDecoration(
+            TextField(
+                   decoration:  const InputDecoration(
             hintText: "Search (City)",
             hintStyle:  TextStyle(color: Color(0xff14213d)),
-             
-                   )
+                   ),
+            onChanged: (value) {
+              setState(() {
+                _cityname=value;
+              });
+            },
      ),         
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-          onPressed:(){ } ,
+          onPressed:(){
+            setState(() {
+              _getWeatherData();
+            });
+           } ,
          child: const Text("Search"),
          ),
          const SizedBox(height: 16.0),
