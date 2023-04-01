@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:weatherapp/screen/home_screen.dart';
-class HelpScreenPage extends StatefulWidget {
-  const HelpScreenPage({super.key});
+
+class HelpScreenPageHome extends StatefulWidget {
+  const HelpScreenPageHome({super.key});
 
   @override
-  State<HelpScreenPage> createState() => _HelpScreenPageState();
+  State<HelpScreenPageHome> createState() => _HelpScreenPageHomeState();
 }
 
-class _HelpScreenPageState extends State<HelpScreenPage> {
+class _HelpScreenPageHomeState extends State<HelpScreenPageHome> {
 @override
   void initState() {
     super.initState();
-    _goToHome();
+    _goToHomee();
   }
 
-  _goToHome() async{
+  _goToHomee() async{
     await Future.delayed(const Duration(seconds:5));
-      if (!mounted) return;
+    if (!mounted) return;
     setState(() {
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const HomePage()));
+       Navigator.of(context).pop();
     });
+ 
   }
 
   @override
@@ -41,9 +42,8 @@ class _HelpScreenPageState extends State<HelpScreenPage> {
               const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  const HomePage()));
-                },
-                
+                  Navigator.of(context).pop();
+                },           
                style: ElevatedButton.styleFrom(backgroundColor: Colors.black,fixedSize: const Size(80, 30)),
                child: const Text("Skip"),
                )

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:location/location.dart';
-import 'package:weatherapp/screen/help_screen.dart';
+import 'package:weatherapp/screen/help_screen_home.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -47,67 +47,72 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(" Weather"),
-        actions: [      // help screen page when clicked
-          IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpScreenPage(),),
-            );
-          },
-           icon: const Icon(Icons.help_sharp))
-        ],
-      ),
-      body: Column(
-          children: [
-            TextField(            // Textfield to enter city name
-                   decoration:  const InputDecoration(
-            hintText: "Search (City)",
-            hintStyle:  TextStyle(color: Color(0xff14213d)),
-                   ),
-            onChanged: (value) {
-              setState(() {
-                _cityname=value;
-              });
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xff7895B2),
+          centerTitle: true,
+          title: const Text(" Weather"),
+          actions: [      // help screen page when clicked
+            IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpScreenPageHome(),),
+              );
             },
-     ),         
-        ElevatedButton(             //Button for searching data
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-          onPressed:(){
-            setState(() {
-              _getWeatherData();
-            });
-           } ,
-         child: Text(_buttonLoaded?"UPDATE":"SAVE"),
-         ),
-         const SizedBox(height: 16.0),
-        _weatherData.isNotEmpty
-            ? Column(                     // for displaying weather details
-                children: [
-                  Text(
-                    '${_weatherData['location']['name']}',
-                    style: const TextStyle(fontSize: 24.0),
-                  ),
-                  const SizedBox(height: 16.0),
-                  Text(
-                    '${_weatherData['current']['temp_c']}°C',
-                    style: const TextStyle(fontSize: 24.0),
-                  ),
-                  const SizedBox(height: 16.0,),
-                  Text('${_weatherData['current']['condition']['text']}',
-                   style: const TextStyle(fontSize: 24.0)),
-                   const SizedBox(height: 16.0),
-                   Image.network('https:${_weatherData['current']['condition']['icon']}',),
-                  
-                ],
-              )
-            : const Center(
-                child: Text('Weather Details',
-                style: TextStyle(fontSize: 24.0),),
-              )
-          ]
-      )
+             icon: const Icon(Icons.help_sharp))
+          ],
+          elevation: 0,
+        ),
+        backgroundColor: const Color(0xffAEBDCA),
+        body: Column(
+            children: [
+              TextField(            // Textfield to enter city name
+                     decoration:  const InputDecoration(
+              hintText: "Search (City)",
+              hintStyle:  TextStyle(color: Color(0xff14213d)),
+                     ),
+              onChanged: (value) {
+                setState(() {
+                  _cityname=value;
+                });
+              },
+       ),         
+          ElevatedButton(             //Button for searching data
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+            onPressed:(){
+              setState(() {
+                _getWeatherData();
+              });
+             } ,
+           child: Text(_buttonLoaded?"UPDATE":"SAVE"),
+           ),
+           const SizedBox(height: 16.0),
+          _weatherData.isNotEmpty
+              ? Column(                     // for displaying weather details
+                  children: [
+                    Text(
+                      '${_weatherData['location']['name']}',
+                      style: const TextStyle(fontSize: 24.0),
+                    ),
+                    const SizedBox(height: 16.0),
+                    Text(
+                      '${_weatherData['current']['temp_c']}°C',
+                      style: const TextStyle(fontSize: 24.0),
+                    ),
+                    const SizedBox(height: 16.0,),
+                    Text('${_weatherData['current']['condition']['text']}',
+                     style: const TextStyle(fontSize: 24.0)),
+                     const SizedBox(height: 16.0),
+                     Image.network('https:${_weatherData['current']['condition']['icon']}',),
+                    
+                  ],
+                )
+              : const Center(
+                  child: Text('Weather Details',
+                  style: TextStyle(fontSize: 24.0),),
+                )
+            ]
+        )
+      ),
     );   
 
     }
