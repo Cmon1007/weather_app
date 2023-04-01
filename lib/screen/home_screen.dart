@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:location/location.dart';
 import 'package:weatherapp/screen/help_screen.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,12 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _cityname="";
   Map<String, dynamic> _weatherData={}; 
-  @override
-  void initState() {
-    super.initState();
-    _getWeatherData();
-  }
 
+  //Calling Api with http request
    void _getWeatherData() async
   {
     Response response=await get(Uri.parse(
@@ -39,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(" Weather"),
-        actions: [
+        actions: [      // help screen page when clicked
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpScreenPage(),),
             );
@@ -49,7 +45,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
           children: [
-            TextField(
+            TextField(            // Textfield to enter city name
                    decoration:  const InputDecoration(
             hintText: "Search (City)",
             hintStyle:  TextStyle(color: Color(0xff14213d)),
@@ -60,7 +56,7 @@ class _HomePageState extends State<HomePage> {
               });
             },
      ),         
-        ElevatedButton(
+        ElevatedButton(             //Button for searching data
           style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
           onPressed:(){
             setState(() {
@@ -71,7 +67,7 @@ class _HomePageState extends State<HomePage> {
          ),
          const SizedBox(height: 16.0),
         _weatherData.isNotEmpty
-            ? Column(
+            ? Column(                     // for displaying weather details
                 children: [
                   Text(
                     '${_weatherData['location']['name']}',
@@ -99,4 +95,39 @@ class _HomePageState extends State<HomePage> {
     );   
 
     }
+    // For getting default data with current latitude and longitute of user using location package
+  void _getDefaultWeatherData() async
+  {
+    final location=Location();
+    LocationData? currentLocation;
+    try{
+      currentLocation= await location.getLocation();
+    }
+    catch(e)
+    {
+      return null;
+    }
+    Response response=await get(Uri.parse(
+      "http://api.weatherapi.com/v1/current.json?key=bcf129e6d8a045f881d43921232703&q=${currentLocation.latitude},${currentLocation.longitude}&aqi=no"),
+      );
+    try
+    {
+      if(response.statusCode==200)
+    {
+      setState(() {
+        _weatherData=jsonDecode(response.body);
+      });
+    }
+    }
+    catch(e)
+    {
+      return null;
+    }  
+  }
+   
+@override
+  void initState() {
+    super.initState();
+    _getDefaultWeatherData();
+  }
   }
