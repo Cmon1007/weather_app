@@ -50,25 +50,42 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xff7895B2),
+          backgroundColor: const Color(0xff610F7F),
           centerTitle: true,
-          title: const Text(" Weather"),
+          title: const Text("View Weather",style: TextStyle(color: Colors.white),),
           actions: [      // help screen page when clicked
             IconButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpScreenPageHome(),),
               );
             },
-             icon: const Icon(Icons.help_sharp))
+             icon: const Icon(Icons.help_sharp,color: Colors.white,))
           ],
           elevation: 0,
         ),
-        backgroundColor: const Color(0xffAEBDCA),
+        backgroundColor: const Color(0xffF6F7EB),
         body: Column(
             children: [
+              const SizedBox(height: 18.0,),
               TextField(            // Textfield to enter city name
-                     decoration:  const InputDecoration(
-              hintText: "Search (City)",
-              hintStyle:  TextStyle(color: Color(0xff14213d)),
+                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                      suffixIcon: Icon(Icons.search,color: Colors.black.withOpacity(0.5),size: 30,),
+                      border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(color: Colors.black),        
+            ),
+            enabledBorder: OutlineInputBorder( 
+              borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(style:BorderStyle.solid,color: Colors.black),        
+                  ),
+                  focusedBorder:OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+                    borderSide: const BorderSide(style:BorderStyle.solid,color: Colors.black),        
+                  ),
+              // hintText: "Search (City)",
+              // hintStyle:  const TextStyle(color: Color(0xff14213d)),
+              labelText: "Search (City)",
+              labelStyle: const TextStyle(color: Color(0xff14213d))
                      ),
               onChanged: (value) {
                 setState(() {
@@ -85,23 +102,23 @@ class _HomePageState extends State<HomePage> {
              } ,
            child: Text(_buttonLoaded?"UPDATE":"SAVE"),
            ),
-           const SizedBox(height: 16.0),
+           const SizedBox(height: 15.0),
           _weatherData.isNotEmpty
               ? Column(                     // for displaying weather details
                   children: [
                     Text(
-                      '${_weatherData['location']['name']}',
-                      style: const TextStyle(fontSize: 24.0),
+                      'City: ${_weatherData['location']['name']}',
+                      style: const TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 15.0),
                     Text(
-                      '${_weatherData['current']['temp_c']}°C',
-                      style: const TextStyle(fontSize: 24.0),
+                      'Temperature: ${_weatherData['current']['temp_c']}°C',
+                      style: const TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 16.0,),
-                    Text('${_weatherData['current']['condition']['text']}',
-                     style: const TextStyle(fontSize: 24.0)),
-                     const SizedBox(height: 16.0),
+                    const SizedBox(height: 15.0,),
+                    Text('Condition: ${_weatherData['current']['condition']['text']}',
+                     style: const TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold)),
+                     const SizedBox(height: 15.0),
                      Image.network('https:${_weatherData['current']['condition']['icon']}',),
                     
                   ],
