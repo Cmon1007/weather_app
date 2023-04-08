@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:weatherapp/screen/home_screen.dart';
-class HelpScreenPage extends StatefulWidget {
-  const HelpScreenPage({super.key});
+
+class HelpScreenPageHome extends StatefulWidget {
+  const HelpScreenPageHome({super.key});
 
   @override
-  State<HelpScreenPage> createState() => _HelpScreenPageState();
+  State<HelpScreenPageHome> createState() => _HelpScreenPageHomeState();
 }
 
-class _HelpScreenPageState extends State<HelpScreenPage> {
+class _HelpScreenPageHomeState extends State<HelpScreenPageHome> {
 @override
   void initState() {
     super.initState();
-    _goToHome();
+    _goToHomee();
   }
 
-  _goToHome() async{
-    await Future.delayed(const Duration(seconds:5));  // stays active for 5 seconds.
-      if (!mounted) return;
+  _goToHomee() async{
+    await Future.delayed(const Duration(seconds:5));
+    if (!mounted) return;
     setState(() {
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const HomePage()));  //will route the page to HomePage
+       Navigator.of(context).pop();   //Will close the page and goes to the page where it previously was.
     });
+ 
   }
 
   @override
@@ -30,7 +31,7 @@ class _HelpScreenPageState extends State<HelpScreenPage> {
           height: double.infinity,
           width: double.infinity,
           decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/images/rain.png"),  //Background frame image
+            image: DecorationImage(image: AssetImage("assets/images/rain.png"),  // adding background image
             fit: BoxFit.fill) 
           ),
           child: Column(
@@ -41,9 +42,8 @@ class _HelpScreenPageState extends State<HelpScreenPage> {
               const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  const HomePage()));   // route the page to HomePage when skip button is clicked
-                },
-                
+                  Navigator.of(context).pop();    //will go to the previous page.
+                },           
                style: ElevatedButton.styleFrom(backgroundColor: Colors.black,fixedSize: const Size(80, 30)),
                child: const Text("SKIP"),
                )
